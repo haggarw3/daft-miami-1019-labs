@@ -1,0 +1,170 @@
+
+## Challenges
+### Challenge 1
+
+One player rolls two dices. Describe the measurable space and the random variable for:
+* A. The values that the player obtains.
+
+
+{(1,1)(1,2),(1,3),(1,4),(1,5),(1,6)
+(2,1)(2,2),(2,3),(2,4),(2,5),(2,6)
+(3,1)(3,2),(3,3),(3,4),(3,5),(3,6)
+(4,1)(4,2),(4,3),(4,4),(4,5),(4,6)
+(5,1)(5,2),(5,3),(5,4),(5,5),(5,6)
+(6,1)(6,2),(6,3),(6,4),(6,5),(6,6)}
+
+36 distinct possibilities
+
+* B. The sum of the values obtained.
+
+the sum can range from anywhere between 2 and 12
+
+sum = 2     Possibilities: (1,1)
+sum = 3     Possibilities: (2,1)(1,2)
+sum = 4     Possibilities: (2,2)(1,3)(3,1)
+sum = 5     Possibilities: (1,4)(4,1)(2,3)(3,2)
+sum = 6     Possibilities: (1,5)(5,1)(3,3)(4,2)(2,4)
+sum = 7     Possibilities: (1,6)(6,1)(4,3)(3,4)(2,5)(5,2)
+sum = 8     Possibilities: (4,4)(6,2)(2,6)(3,5)(5,3)
+sum = 9     Possibilities: (4,5)(5,4)(3,6)(6,3)
+sum = 10    Possibilities: (5,5)(6,4)(4,6)
+sum = 11    Possibilities: (5,6)(6,5)
+sum = 12    Possibilities: (6,6)
+
+
+
+
+* C. The maximum value obtained after rolling both dices.
+
+Max value obtained would be sum = 12, with a probability of 1/36  
+Possibilities: (6,6)
+
+
+
+Describe the following events:
+* Case A: Both values are greater than 5.
+
+probability of this happening would be 1/36, as both dice rolls would need to result in a "6"
+
+* Case B: The sum of values is even.
+
+18/36 = 1/2 probability of happening
+
+* Case C: The maximum is the value of both rolls.
+
+??
+
+
+### Challenge 2
+One player picks two cards from a poker deck. Describe the measurable space and the random variable for:
+* A. The number of figures he picks.
+
+S = Spades
+H = Hearts
+D = Diamonds
+C = Clubs
+
+{(SA, SK),(SA, SQ),(SA,SJ)
+ (SK, SA),(SK, SQ),(SK, SJ)
+ (SQ, SA),(S2,S6),(S2,S7),(S2,S8),(S2,S9),(S2,S10),(S2,SJ),(S2,SQ)
+(S3, SA),(S3, S2),(S3,S4),(S3,S5),(S3,S6),(S3,S7),(S3,S8),(S3,S9),(S3,S10),(S3,SJ),(S3,SQ)
+
+...
+...
+
+52 x 51 possibilities total
+
+First card there are 52 possibilities
+Second card there are 51 possibilities (assuming you do not replace the first card that was drawn)
+
+* B. The sum of card values. Consider that the value of figures is 10 and the value of aces is 15.
+
+sum = 4     Possibilities: (S2,H2)(S2,D2)(S2,C2)
+                           (H2,S2)(H2,D2)(H2,C2)
+                           (D2,S2)(D2,H2)(D2,C2)
+                           (C2,S2)(C2,H2)(C2,D2)
+sum = 5     Possibilities: (S2,H3)(S2,D3)(S2,C3)
+                           (H2,S3)(H2,D3)(H2,C3)
+                           (D2,S3)(D2,H3)(D2,C3)
+                           (C2,S3)(C2,H3)(C2,D3)
+                           (S3,H2)(S3,D2)(S3,C2)
+                           (H3,S2)(H3,D2)(H3,C2)
+                           (D3,S2)(D3,H2)(D3,C2)
+                           (C3,S2)(C3,H2)(C3,D2)
+sum = 6                    ...
+sum = 7                    ...
+....
+....
+....
+sum = 30     Possibilities:(SA,HA)(SA,DA)(SA,CA)
+                           (HA,SA)(HA,DA)(HA,CA)
+                           (DA,SA)(DA,HA)(DA,CA)
+                           (CA,SA)(CA,HA)(CA,DA)
+                           
+                            
+* C. The number of hearts or spades he picks.
+
+First try: 52
+Second try: 51
+
+{(H,H) (H,S) (S,S) (S,H)
+ (0,H) (H,0) (S,0) (0,S)}
+ 
+ 
+ 
+
+Describe the following events:
+* Case A: The number of figures in the cards the player picked is two.
+* Case B: The sum of card values is 17.
+* Case C: The value of both cards is less than 8.
+
+### Challenge 3
+Two players roll a dice. Describe the measurable space and the random variable for:
+* A. The score of player A.
+
+Xa = {1,2,3,4,5,6}
+
+* B. The greatest score.
+
+X if Xa > Xb X = Xa
+     Xb < Xa X = Xb
+     
+* C. The earnings of player A if the game rules state that:  
+"The player with the greatest score gets a coin from the other player.".
+
+E 
+
+Ea + 1c Eb - 1c
+Ea - 1c Eb + 1c
+
+* D. The earnings of player A if the game rules state that:  
+"The player with the greatest score gets as many coins as the difference between the score of player A and player B.". 
+
+Describe the following events:
+* Case A: The score of player A is 2.
+
+Xa = 2
+{(2,1) (2,2)(2,3)(2,4)(2,5)(2,6)}
+
+
+* Case B: The greatest score is lower or equal than 2.
+
+X <= 2
+
+{(1,2)(2,1)}
+
+* Case C: Considering the case where the winner gets as many coins as the difference between scores (D), describe: 
+
+  * Player A wins at least 4 coins.
+  
+  {(5,1)(6,1)(6,2)} 3/36
+  
+  * Player A loses more than 2 coins.
+  {(1,4) (1,5) (1,6)
+   (2,5) (2,6)
+   (3,6)}
+   
+   6/36
+  
+  * Player A neither wins nor loses coins.
+  
