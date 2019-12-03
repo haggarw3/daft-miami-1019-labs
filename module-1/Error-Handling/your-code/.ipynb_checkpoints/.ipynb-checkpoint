@@ -17,8 +17,16 @@
    "outputs": [],
    "source": [
     "# Libraries\n",
-    "import math"
+    "import math\n",
+    "\n"
    ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
   },
   {
    "cell_type": "markdown",
