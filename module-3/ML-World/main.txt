@@ -1,0 +1,18 @@
+Lab | Machine Learning & AI World
+
+Let's start! You will be assigned to an article and a day when you will have 5 minutes to share your research with your colleagues and then 5 minutes to discuss a little bit. Feel free to present your conclusions in the way you prefer.
+
+Selected- 8. [Spotify recommendation model]
+Used link: https://medium.com/@terry.foley555/spotify-algorithms-5f38b6b6db58
+
+Spotify uses three different models:
+
+
+1- Collaborative Filtering
+    Like Netflix's star-rating system, where based on one user's rating they can suggest another user with similar ratings what to watch, the popularity metric in Spotify are streams along with recording if user visited the artist's page, or saved the song to a playlist. The data is managed by open-source Kafka software. "By using Python libraries to create a matrix, and then running a matrix factorization formula."
+
+2- Natural Language Processing (NLP)
+    Spotify composes a database by scouring online sites(blogs, articles, etc.) regarding what is said of artists & songs, particularly adjectives. Then creates another database with the descriptive words per artist and weighs them in order of importance, calculating the probability that it a user will use those words to describe the artist. Finally, Spotify uses these weigthed words to compare to other artist in order to enhance the suggested recommendations process.
+
+3- Audio Models
+    In addition, Spotify also uses the same technology used by facial recognition software- convolutional neural networks. This allows for the analysis of raw audio data. Processing song data in order to compare and contrast among songs through characteristics such as key, tempo, time signature, and volume. An added benefit is that raw audio data doesn't take into account how recent the songs have been released or the song's popularity, allowing lesser known artists some exposure and being able to appear on playlists like the Discover Weekly.
