@@ -8,7 +8,7 @@ As a python developer, you need the right tool for the right job. In this lab, y
 
 ## Getting Started
 
-Open the `main.ipynb` file in the `your-code` directory. Follow the instructions and add your code and explanations as necessary. By the end of this lab, you will have learned about the different uses and advantages of lambda functions.
+Open the `main.ipynb` file in the `your-code` directory. Follow the instructions and add your code and explanations as necessary. By the end of this lab, you will have learned about the different uses and advantages of lambda functios.
 
 ## Deliverables
 
