@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ContentFilters</key>
+	<dict/>
+	<key>auto_connect</key>
+	<true/>
+	<key>data</key>
+	<dict>
+		<key>connection</key>
+		<dict>
+			<key>database</key>
+			<string>pubs</string>
+			<key>host</key>
+			<string>127.0.0.1</string>
+			<key>kcid</key>
+			<string>6362020329893383565</string>
+			<key>name</key>
+			<string>localhost</string>
+			<key>rdbms_type</key>
+			<string>mysql</string>
+			<key>sslCACertFileLocation</key>
+			<string></string>
+			<key>sslCACertFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslCertificateFileLocation</key>
+			<string></string>
+			<key>sslCertificateFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslKeyFileLocation</key>
+			<string></string>
+			<key>sslKeyFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>type</key>
+			<string>SPTCPIPConnection</string>
+			<key>useSSL</key>
+			<integer>0</integer>
+			<key>user</key>
+			<string>grace</string>
+		</dict>
+		<key>session</key>
+		<dict>
+			<key>connectionEncoding</key>
+			<string>utf8</string>
+			<key>contentFilterV2</key>
+			<dict>
+				<key>children</key>
+				<array/>
+				<key>filterClass</key>
+				<string>groupNode</string>
+				<key>isConjunction</key>
+				<true/>
+			</dict>
+			<key>contentPageNumber</key>
+			<integer>1</integer>
+			<key>contentSelection</key>
+			<data>
+			YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0
+			b3BYJG9iamVjdHMSAAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRk
+			YXRhgAGoCwwXGBkaHiVVJG51bGzTDQ4PEBMWV05TLmtleXNaTlMu
+			b2JqZWN0c1YkY2xhc3OiERKAAoADohQVgASABYAHVHR5cGVUcm93
+			c18QHVNlbGVjdGlvbkRldGFpbFR5cGVOU0luZGV4U2V00hsPHB1c
+			TlNSYW5nZUNvdW50EACABtIfICEiWiRjbGFzc25hbWVYJGNsYXNz
+			ZXNaTlNJbmRleFNldKIjJFpOU0luZGV4U2V0WE5TT2JqZWN00h8g
+			JidcTlNEaWN0aW9uYXJ5oiYkAAgAEQAaACQAKQAyADcASQBMAFEA
+			UwBcAGIAaQBxAHwAgwCGAIgAigCNAI8AkQCTAJgAnQC9AMIAzwDR
+			ANMA2ADjAOwA9wD6AQUBDgETASAAAAAAAAACAQAAAAAAAAAoAAAA
+			AAAAAAAAAAAAAAABIw==
+			</data>
+			<key>contentSortColIsAsc</key>
+			<true/>
+			<key>contentViewport</key>
+			<string>{{0, 0}, {695, 481}}</string>
+			<key>isToolbarVisible</key>
+			<true/>
+			<key>queries</key>
+			<string># CHALLENGE 1. In this challenge you will write a MySQL `SELECT` query that joins various tables to figure out what titles each author has published at which publishers. 
+
+SELECT pubs.authors.au_id AS AUTHOR_ID, pubs.authors.au_lname AS LAST_NAME, pubs.authors.au_fname AS FIRST_NAME, pubs.titleauthor.title_id AS TITLE, pubs.publishers.pub_name AS PUBLISHER 
+FROM pubs.authors
+JOIN pubs.titleauthor ON authors.au_id = titleauthor.au_id
+JOIN pubs.titles ON titleauthor.title_id = titles.title_id
+JOIN pubs.publishers ON titles.pub_id = publishers.pub_id;
+
+# CHALLENGE 2. Elevating from your solution in Challenge 1, query how many titles each author has published at each publisher.
+
+SELECT pubs.authors.au_id AS AUTHOR_ID, pubs.authors.au_lname AS LAST_NAME, pubs.authors.au_fname AS FIRST_NAME, pubs.publishers.pub_name AS PUBLISHER, COUNT(pubs.titles.title) AS TITLE_COUNT
+FROM pubs.authors
+JOIN pubs.titleauthor ON authors.au_id = titleauthor.au_id
+JOIN pubs.titles ON titleauthor.title_id = titles.title_id
+JOIN pubs.publishers ON titles.pub_id = publishers.pub_id
+GROUP BY AUTHOR_ID, LAST_NAME, FIRST_NAME, PUBLISHER
+ORDER BY COUNT(TITLE_COUNT) desc;
+
+# CHALLENGE 3. Who are the top 3 authors who have sold the highest number of titles?
+
+SELECT pubs.authors.au_id AS AUTHOR_ID, pubs.authors.au_lname AS LAST_NAME, pubs.authors.au_fname AS FIRST_NAME, pubs.publishers.pub_name AS PUBLISHER, COUNT(pubs.titles.title) AS TITLE_COUNT
+FROM pubs.authors
+JOIN pubs.titleauthor ON authors.au_id = titleauthor.au_id
+JOIN pubs.titles ON titleauthor.title_id = titles.title_id
+JOIN pubs.publishers ON titles.pub_id = publishers.pub_id
+GROUP BY AUTHOR_ID, LAST_NAME, FIRST_NAME, PUBLISHER
+ORDER BY COUNT(TITLE_COUNT) DESC LIMIT 3;
+
+# CHALLENGE 4. Now modify your solution in Challenge 3 so that the output will display all 23 authors instead of the top 3. Note that the authors who have sold 0 titles should also appear in your output. Also order your results based on `TOTAL` from high to low.
+
+SELECT pubs.authors.au_id AS AUTHOR_ID, pubs.authors.au_lname AS LAST_NAME, pubs.authors.au_fname AS FIRST_NAME, COUNT(pubs.titles.title) AS TITLE_COUNT
+FROM pubs.authors
+LEFT JOIN pubs.titleauthor ON authors.au_id = titleauthor.au_id
+LEFT JOIN pubs.titles ON titleauthor.title_id = titles.title_id
+LEFT JOIN pubs.sales ON titles.title_id = sales.title_id
+GROUP BY AUTHOR_ID 
+ORDER BY TITLE_COUNT DESC;
+
+
+</string>
+			<key>view</key>
+			<string>SP_VIEW_CUSTOMQUERY</string>
+			<key>windowVerticalDividerPosition</key>
+			<real>182</real>
+		</dict>
+	</dict>
+	<key>encrypted</key>
+	<false/>
+	<key>format</key>
+	<string>connection</string>
+	<key>queryFavorites</key>
+	<array/>
+	<key>queryHistory</key>
+	<array>
+		<string>SELECT pubs.authors.au_id AS AUTHOR_ID, pubs.authors.au_lname AS LAST_NAME, pubs.authors.au_fname AS FIRST_NAME, COUNT(pubs.titles.title) AS TITLE_COUNT
+FROM pubs.authors
+LEFT JOIN pubs.titleauthor ON authors.au_id = titleauthor.au_id
+LEFT JOIN pubs.titles ON titleauthor.title_id = titles.title_id
+LEFT JOIN pubs.sales ON titles.title_id = sales.title_id
+GROUP BY AUTHOR_ID 
+ORDER BY TITLE_COUNT DESC</string>
+		<string>SELECT pubs.authors.au_id AS AUTHOR_ID, pubs.authors.au_lname AS LAST_NAME, pubs.authors.au_fname AS FIRST_NAME, pubs.publishers.pub_name AS PUBLISHER, COUNT(pubs.titles.title) AS TITLE_COUNT
+FROM pubs.authors
+JOIN pubs.titleauthor ON authors.au_id = titleauthor.au_id
+JOIN pubs.titles ON titleauthor.title_id = titles.title_id
+JOIN pubs.publishers ON titles.pub_id = publishers.pub_id
+GROUP BY AUTHOR_ID, LAST_NAME, FIRST_NAME, PUBLISHER
+ORDER BY COUNT(TITLE_COUNT) DESC LIMIT 3</string>
+		<string>SELECT pubs.authors.au_id AS AUTHOR_ID, pubs.authors.au_lname AS LAST_NAME, pubs.authors.au_fname AS FIRST_NAME, pubs.titleauthor.title_id AS TITLE, pubs.publishers.pub_name AS PUBLISHER 
+FROM pubs.authors
+JOIN pubs.titleauthor ON authors.au_id = titleauthor.au_id
+JOIN pubs.titles ON titleauthor.title_id = titles.title_id
+JOIN pubs.publishers ON titles.pub_id = publishers.pub_id</string>
+		<string>SELECT pubs.authors.au_id AS AUTHOR_ID, pubs.authors.au_lname AS LAST_NAME, pubs.authors.au_fname AS FIRST_NAME, pubs.publishers.pub_name AS PUBLISHER, COUNT(pubs.titles.title) AS TITLE_COUNT
+FROM pubs.authors
+JOIN pubs.titleauthor ON authors.au_id = titleauthor.au_id
+JOIN pubs.titles ON titleauthor.title_id = titles.title_id
+JOIN pubs.publishers ON titles.pub_id = publishers.pub_id
+GROUP BY AUTHOR_ID, LAST_NAME, FIRST_NAME, PUBLISHER
+ORDER BY COUNT(TITLE_COUNT) desc</string>
+		<string># CHALLENGE 1.
+
+SELECT pubs.authors.au_id AS AUTHOR_ID, pubs.authors.au_lname AS LAST_NAME, pubs.authors.au_fname AS FIRST_NAME, pubs.titleauthor.title_id AS TITLE, pubs.publishers.pub_name AS PUBLISHER 
+FROM pubs.authors
+JOIN pubs.titleauthor ON authors.au_id = titleauthor.au_id
+JOIN pubs.titles ON titleauthor.title_id = titles.title_id
+JOIN pubs.publishers ON titles.pub_id = publishers.pub_id</string>
+		<string>SELECT pubs.authors.au_id AS AUTHOR_ID, pubs.authors.au_lname AS LAST_NAME, pubs.authors.au_fname AS FIRST_NAME, COUNT(pubs.titles.title) AS TITLE_COUNT
+FROM pubs.authors
+LEFT JOIN pubs.titleauthor ON authors.au_id = titleauthor.au_id
+LEFT JOIN pubs.titles ON titleauthor.title_id = titles.title_id
+LEFT JOIN pubs.sales ON titles.title_id = sales.title_id
+GROUP BY AUTHOR_ID 
+ORDER BY COUNT(TITLE_COUNT) DESC</string>
+		<string>SELECT pubs.authors.au_id AS AUTHOR_ID, pubs.authors.au_lname AS LAST_NAME, pubs.authors.au_fname AS FIRST_NAME, COUNT(pubs.titles.title) AS TITLE_COUNT
+FROM pubs.authors
+JOIN pubs.titleauthor ON authors.au_id = titleauthor.au_id
+JOIN pubs.titles ON titleauthor.title_id = titles.title_id
+JOIN pubs.sales ON titles.title_id = sales.title_id
+GROUP BY AUTHOR_ID 
+ORDER BY COUNT(TITLE_COUNT) DESC</string>
+		<string>SELECT pubs.authors.au_id AS AUTHOR_ID, pubs.authors.au_lname AS LAST_NAME, pubs.authors.au_fname AS FIRST_NAME, COUNT(pubs.titles.title) AS TITLE_COUNT
+FROM pubs.authors
+JOIN pubs.titleauthor ON authors.au_id = titleauthor.au_id
+JOIN pubs.titles ON titleauthor.title_id = titles.title_id
+JOIN pubs.sales ON titles.title_id = sales.title_id
+GROUP BY AUTHOR_ID 
+ORDER BY COUNT(TITLE_COUNT) DESC
+WHERE NULL LIKE 0</string>
+		<string>SELECT pubs.authors.au_id AS AUTHOR_ID, pubs.authors.au_lname AS LAST_NAME, pubs.authors.au_fname AS FIRST_NAME, pubs.publishers.pub_name AS PUBLISHER, COUNT(pubs.titles.title) AS TITLE_COUNT
+FROM pubs.authors
+JOIN pubs.titleauthor ON authors.au_id = titleauthor.au_id
+JOIN pubs.titles ON titleauthor.title_id = titles.title_id
+JOIN pubs.publishers ON titles.pub_id = publishers.pub_id
+GROUP BY AUTHOR_ID, LAST_NAME, FIRST_NAME, PUBLISHER
+ORDER BY COUNT(TITLE_COUNT) DESC</string>
+		<string>SELECT pubs.authors.au_id AS AUTHOR_ID, pubs.authors.au_lname AS LAST_NAME, pubs.authors.au_fname AS FIRST_NAME, pubs.publishers.pub_name AS PUBLISHER, COUNT(pubs.titles.title) AS TITLE_COUNT
+FROM pubs.authors
+JOIN pubs.titleauthor ON authors.au_id = titleauthor.au_id
+JOIN pubs.titles ON titleauthor.title_id = titles.title_id
+JOIN pubs.publishers ON titles.pub_id = publishers.pub_id
+FROM pubs.titles INNER JOIN pubs.sales ON titles.title_id = sales.title_id
+GROUP BY AUTHOR_ID 
+ORDER BY COUNT(TITLE_COUNT) DESC</string>
+		<string>SELECT pubs.authors.au_id AS AUTHOR_ID, pubs.authors.au_lname AS LAST_NAME, pubs.authors.au_fname AS FIRST_NAME, pubs.publishers.pub_name AS PUBLISHER, COUNT(pubs.titles.title) AS TITLE_COUNT
+FROM pubs.authors
+JOIN pubs.titleauthor ON authors.au_id = titleauthor.au_id
+JOIN pubs.titles ON titleauthor.title_id = titles.title_id
+JOIN pubs.publishers ON titles.pub_id = publishers.pub_id
+JOIN pubs.sales ON titles.title_id = sales.title_id
+GROUP BY AUTHOR_ID 
+ORDER BY COUNT(TITLE_COUNT) DESC</string>
+		<string>SELECT pubs.authors.au_id AS AUTHOR_ID, pubs.authors.au_lname AS LAST_NAME, pubs.authors.au_fname AS FIRST_NAME, pubs.publishers.pub_name AS PUBLISHER, COUNT(pubs.titles.title) AS TITLE_COUNT
+FROM pubs.authors
+JOIN pubs.titleauthor ON authors.au_id = titleauthor.au_id
+JOIN pubs.titles ON titleauthor.title_id = titles.title_id
+JOIN pubs.publishers ON titles.pub_id = publishers.pub_id
+JOIN pubs.sales ON publishers.title_id = sales.title_id
+GROUP BY AUTHOR_ID 
+ORDER BY COUNT(TITLE_COUNT) DESC</string>
+		<string>SELECT pubs.authors.au_id AS AUTHOR_ID, pubs.authors.au_lname AS LAST_NAME, pubs.authors.au_fname AS FIRST_NAME, pubs.publishers.pub_name AS PUBLISHER, COUNT(pubs.titles.title) AS TITLE_COUNT
+FROM pubs.authors
+JOIN pubs.titleauthor ON authors.au_id = titleauthor.au_id
+JOIN pubs.titles ON titleauthor.title_id = titles.title_id
+JOIN pubs.publishers ON titles.pub_id = publishers.pub_id
+JOIN pubs.sales ON publishers.title_id = sales.title_id
+GROUP BY AUTHOR_ID, LAST_NAME, FIRST_NAME,
+ORDER BY COUNT(TITLE_COUNT) DESC</string>
+		<string>SELECT pubs.authors.au_id AS AUTHOR_ID, pubs.authors.au_lname AS LAST_NAME, pubs.authors.au_fname AS FIRST_NAME, pubs.publishers.pub_name AS PUBLISHER, COUNT(pubs.titles.title) AS TITLE_COUNT
+FROM pubs.authors
+JOIN pubs.titleauthor ON authors.au_id = titleauthor.au_id
+JOIN pubs.titles ON titleauthor.title_id = titles.title_id
+JOIN pubs.publishers ON titles.pub_id = publishers.pub_id
+JOIN pubs.sales ON publishers.title_id = sales.title_id
+GROUP BY AUTHOR_ID, LAST_NAME, FIRST_NAME, PUBLISHER
+ORDER BY COUNT(TITLE_COUNT) DESC</string>
+		<string>SELECT pubs.authors.au_id AS AUTHOR_ID, pubs.authors.au_lname AS LAST_NAME, pubs.authors.au_fname AS FIRST_NAME, pubs.publishers.pub_name AS PUBLISHER, COUNT(pubs.titles.title) AS TITLE_COUNT
+FROM pubs.authors
+JOIN pubs.titleauthor ON authors.au_id = titleauthor.au_id
+JOIN pubs.titles ON titleauthor.title_id = titles.title_id
+JOIN pubs.publishers ON titles.pub_id = publishers.pub_id
+GROUP BY AUTHOR_ID, LAST_NAME, FIRST_NAME, PUBLISHER
+ORDER BY COUNT(AUTH_ID) DESC</string>
+		<string>SELECT TOP 3 TITLE_COUNT pubs.titles
+SELECT pubs.authors.au_id AS AUTHOR_ID, pubs.authors.au_lname AS LAST_NAME, pubs.authors.au_fname AS FIRST_NAME, pubs.publishers.pub_name AS PUBLISHER, COUNT(pubs.titles.title) AS TITLE_COUNT
+FROM pubs.authors
+JOIN pubs.titleauthor ON authors.au_id = titleauthor.au_id
+JOIN pubs.titles ON titleauthor.title_id = titles.title_id
+JOIN pubs.publishers ON titles.pub_id = publishers.pub_id
+GROUP BY AUTHOR_ID, LAST_NAME, FIRST_NAME, PUBLISHER
+ORDER BY COUNT(TITLE_COUNT) desc</string>
+		<string>SELECT pubs.authors.au_id AS AUTHOR_ID, pubs.authors.au_lname AS LAST_NAME, pubs.authors.au_fname AS FIRST_NAME, pubs.publishers.pub_name AS PUBLISHER, COUNT(pubs.titles.title) AS TITLE_COUNT
+FROM pubs.authors
+JOIN pubs.titleauthor ON authors.au_id = titleauthor.au_id
+JOIN pubs.titles ON titleauthor.title_id = titles.title_id
+JOIN pubs.publishers ON titles.pub_id = publishers.pub_id
+GROUP BY AUTHOR_ID, LAST_NAME, FIRST_NAME, PUBLISHER
+ORDER BY COUNT(TITLE_COUNT) desc
+SELECT TOP 3 TITLE_COUNT pubs.titles</string>
+		<string>SELECT pubs.authors.au_id AS AUTHOR_ID, pubs.authors.au_lname AS LAST_NAME, pubs.authors.au_fname AS FIRST_NAME, pubs.publishers.pub_name AS PUBLISHER, COUNT(pubs.titles.title) AS TITLE_COUNT
+FROM pubs.authors
+JOIN pubs.titleauthor ON authors.au_id = titleauthor.au_id
+JOIN pubs.titles ON titleauthor.title_id = titles.title_id
+JOIN pubs.publishers ON titles.pub_id = publishers.pub_id
+GROUP BY AUTHOR_ID, LAST_NAME, FIRST_NAME, PUBLISHER
+ORDER BY COUNT(TITLE_COUNT)</string>
+		<string>SELECT pubs.authors.au_id AS AUTHOR_ID, pubs.authors.au_lname AS LAST_NAME, pubs.authors.au_fname AS FIRST_NAME, pubs.publishers.pub_name AS PUBLISHER, COUNT(pubs.titles.title) AS TITLE_COUNT
+FROM pubs.authors, 
+JOIN pubs.titleauthor ON authors.au_id = titleauthor.au_id
+JOIN pubs.titles ON titleauthor.title_id = titles.title_id
+JOIN pubs.publishers ON titles.pub_id = publishers.pub_id
+GROUP BY AUTHOR_ID, LAST_NAME, FIRST_NAME, PUBLISHER
+ORDER BY COUNT(TITLE_COUNT)</string>
+		<string>SELECT pubs.authors.au_id AS AUTHOR_ID, pubs.authors.au_lname AS LAST_NAME, pubs.authors.au_fname AS FIRST_NAME, pubs.publishers.pub_name AS PUBLISHER, COUNT(pubs.titles.title) AS TITLE_COUNT
+FROM pubs.authors, 
+JOIN pubs.titleauthor ON authors.au_id = titleauthor.au_id
+JOIN pubs.titles ON titleauthor.title_id = titles.title_id
+JOIN pubs.publishers ON titles.pub_id = publishers.pub_id
+ORDER BY AUTHOR_ID, LAST_NAME, FIRST_NAME, PUBLISHER, COUNT(TITLE_COUNT)</string>
+	</array>
+	<key>rdbms_type</key>
+	<string>mysql</string>
+	<key>rdbms_version</key>
+	<string>8.0.18</string>
+	<key>version</key>
+	<integer>1</integer>
+</dict>
+</plist>
